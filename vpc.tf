@@ -29,6 +29,7 @@ resource "aws_security_group" "VPN" {
   description = "Allow connection from my computer"
   vpc_id = module.roi-vpc.vpc_id
   ingress {
+    description = "My IP"
     from_port = 0
     to_port   = 0
     protocol  = "-1"
