@@ -20,7 +20,7 @@ module "roi-eks" {
   cluster_version = "1.21"
   cluster_name    = "Roi-Test"
   vpc_id          = module.roi-vpc.vpc_id
-  subnets         = module.roi-vpc.public_subnets
+  subnets         = module.roi-vpc.private_subnets
   cluster_security_group_id = aws_security_group.VPN.id
   node_groups = {
     roi-node-group = {
