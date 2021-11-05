@@ -16,12 +16,13 @@ provider "kubernetes" {
 }
 module "roi-eks" {
   source          = "terraform-aws-modules/eks/aws"
-
+  
   cluster_version = "1.21"
-  cluster_name    = "Roi-Test"
+  cluster_name    = "Roi-Test-cluster"
   vpc_id          = module.roi-vpc.vpc_id
   subnets         = module.roi-vpc.private_subnets
   cluster_security_group_id = aws_security_group.VPN.id
+  cluster_tags = {name="Roi"}
   node_groups = {
     roi-node-group = {
       desired_capacity = 3
@@ -30,6 +31,7 @@ module "roi-eks" {
       additional_tags = {
         name = "Roi-test"
       }
+      
     }
   }
 
