@@ -28,7 +28,7 @@ module "roi-eks" {
     # node_role_arn=aws_iam_role.eks-node-group-role.arn
     
   }
-  node_groups = {
+  node_groups = {//create  node groups 
     # example = {
       
     # }
