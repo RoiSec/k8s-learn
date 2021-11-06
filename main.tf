@@ -11,22 +11,11 @@ module "roi-eks" {
   cluster_iam_role_name = aws_iam_role.eks-cluster-role.name
   workers_role_name = aws_iam_role.eks-node-group-role.name
   cluster_endpoint_public_access = true // Allow networking from outside
-  cluster_endpoint_private_access = true //allow networking 
+  cluster_endpoint_private_access = true //allow networking from nodes within the VPC
   manage_worker_iam_resources = false
   manage_cluster_iam_resources = false
   manage_aws_auth = var.manage_aws_auth
   cluster_tags = var.cluster_tags
-  # node_groups = {
-  #   roi-node-group = {
-  #     desired_capacity = 3
-  #     max_capacity     = 5
-  #     min_capacity     = 3
-  #     additional_tags = {
-  #       name = "Roi-test"
-  #     }
-      
-  #   }
-  # }
     
     node_groups_defaults = {
     additional_tags	=var.cluster_tags
@@ -38,5 +27,8 @@ module "roi-eks" {
     
   }
   node_groups = {
+    example = {
+
+    }
 }
 }
