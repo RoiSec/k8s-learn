@@ -4,7 +4,7 @@ module "roi-vpc" {
 
   name                 = "Roi-Test-vpc"
   cidr                 = "10.0.0.0/16"
-  azs                  = ["us-east-2a", "us-east-2b", "us-east-2c"]
+  azs                  = ["eu-west-2a", "eu-west-2b", "eu-west-2c"]
   private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
   enable_nat_gateway   = true
@@ -28,13 +28,25 @@ module "roi-vpc" {
 resource "aws_security_group" "VPN" {
   description = "Allow connection from my computer"
   vpc_id = module.roi-vpc.vpc_id
+  tags = {
+    "name" = "Allow My computer IP"
+  }
   ingress {
     description = "My IP"
     from_port = 0
     to_port   = 0
     protocol  = "-1"
     cidr_blocks = [
-      "217.132.41.21/32"
+      "89.139.169.7/32"
+    ]
+  }
+  egress {
+    description = "any outbound"
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"
+    cidr_blocks = [
+      "0.0.0.0/0"
     ]
   }
 }
