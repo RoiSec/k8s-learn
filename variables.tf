@@ -6,7 +6,7 @@
     type = string
     default = "Roi-Test-cluster"
   }
-  variable "My_Ip" {
+  variable "allowing_ips" {
     type = list(string)
     default = ["89.139.169.7/32"]
   }

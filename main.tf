@@ -7,10 +7,10 @@ module "roi-eks" {
   cluster_name    = var.cluster_name
   vpc_id          = module.roi-vpc.vpc_id
   subnets         = module.roi-vpc.private_subnets
-  cluster_endpoint_public_access_cidrs =["89.139.169.7/32"]  
+  cluster_endpoint_public_access_cidrs = var.allowing_ips
   cluster_iam_role_name = aws_iam_role.eks-cluster-role
-  manage_aws_auth = false
-  cluster_tags = {name="Roi"}
+  manage_aws_auth = var.manage_aws_auth
+  cluster_tags = var.cluster_tags
   # node_groups = {
   #   roi-node-group = {
   #     desired_capacity = 3
