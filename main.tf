@@ -24,7 +24,6 @@ module "roi-eks" {
     min_capacity=3
     desired_capacity=3
     instance_types=["t3.large"]
-    //iam_instance_profile_name=aws_iam_instance_profile.node_group_instance_profile.name
     iam_role_arn=aws_iam_role.eks-node-group-role.arn
     
   }
