@@ -18,18 +18,18 @@ module "roi-eks" {
   cluster_tags = var.cluster_tags
 
     
-    node_groups_defaults = {
-    additional_tags	=var.cluster_tags
-    max_capacity= 5
-    min_capacity=3
-    desired_capacity=3
-    instance_types=["t3.large"]
-    iam_role_arn=aws_iam_role.eks-node-group-role.arn
+#     node_groups_defaults = {
+#     additional_tags	=var.cluster_tags
+#     max_capacity= 5
+#     min_capacity=3
+#     desired_capacity=3
+#     instance_types=["t3.large"]
+#     iam_role_arn=
     
-  }
-  node_groups = {//create  node groups 
-    # example = {
+#   }
+#   node_groups = {//create  node groups 
+#     # example = {
       
-    # }
-}
+#     # }
+# }
 }
