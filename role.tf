@@ -17,24 +17,6 @@ resource "aws_iam_role" "eks-cluster-role" {
 POLICY
 }
 
-resource "aws_iam_role" "eks-node-group-role" {
-  name = "eks-node-group-role"
-
-  assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "ec2.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-POLICY
-}
 
 resource "aws_iam_instance_profile" "node_group_instance_profile" {
   name = "instnce_profile"
@@ -62,9 +44,34 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEKSWorkerNodePolicy" {
 resource "aws_iam_role_policy_attachment" "example-AmazonEKS_CNI_Policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
   role       = aws_iam_role.eks-node-group-role.name
+  depends_on = [
+    aws_iam_role.eks-cluster-role,
+  ]
 }
 
 resource "aws_iam_role_policy_attachment" "example-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks-node-group-role.name
+  depends_on = [
+    aws_iam_role.eks-node-group-role
+  ]
+}
+
+resource "aws_iam_role" "eks-node-group-role" {
+  name = "eks-node-group-role"
+
+  assume_role_policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+POLICY
 }

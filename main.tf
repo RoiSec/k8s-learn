@@ -16,8 +16,9 @@ module "roi-eks" {
   manage_cluster_iam_resources = false // using my Cluster Role
   manage_aws_auth = var.manage_aws_auth
   cluster_tags = var.cluster_tags
-
-    
+  depends_on = [
+    aws_iam_role.eks-cluster-role
+  ]
 #     node_groups_defaults = {
 #     additional_tags	=var.cluster_tags
 #     max_capacity= 5
