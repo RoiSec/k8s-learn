@@ -75,3 +75,9 @@ resource "aws_iam_role" "eks-node-group-role" {
 }
 POLICY
 }
+data "aws_iam_role" "node_role" {
+  name = "eks-node-group-role"
+  depends_on = [
+    aws_iam_role.eks-node-group-role
+  ]
+}

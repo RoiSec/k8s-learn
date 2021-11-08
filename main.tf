@@ -16,20 +16,22 @@ module "roi-eks" {
   manage_aws_auth = var.manage_aws_auth
   cluster_tags = var.cluster_tags
   depends_on = [
-    aws_iam_role.eks-cluster-role
+    aws_iam_role.eks-cluster-role,aws_iam_role.eks-node-group-role,data.aws_iam_role.node_role
   ]
-#     node_groups_defaults = {
-#     additional_tags	=var.cluster_tags
-#     max_capacity= 5
-#     min_capacity=3
-#     desired_capacity=3
-#     instance_types=["t3.large"]
-#     iam_role_arn=
+    node_groups_defaults = {
+    additional_tags	=var.cluster_tags
+    max_capacity= 5
+    min_capacity=3
+    desired_capacity=3
+    instance_types=["t3.large"]
+    iam_role_arn=data.aws_iam_role.node_role.arn
     
-#   }
-#   node_groups = {//create  node groups 
-#     # example = {
+  }
+  node_groups = {//create  node groups 
+    example = {
       
-#     # }
-# }
+    }
 }
+}
+  
+
