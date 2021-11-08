@@ -8,7 +8,7 @@
   }
   variable "allowing_ips" {
     type = list(string)
-    default = ["89.139.169.7/32"]
+    default = ["217.132.45.237/32"]
   }
   variable "manage_aws_auth" {
       type = bool
