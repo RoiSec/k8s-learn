@@ -12,16 +12,16 @@ module "roi-vpc" {
   enable_dns_hostnames = true
   
   tags = {
-    "kubernetes.io/cluster/${var.name}" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 
   public_subnet_tags = {
-    "kubernetes.io/cluster/${var.name}" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                      = "1"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/cluster/${var.name}" = "shared"
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"             = "1"
   }
 }
@@ -29,7 +29,7 @@ resource "aws_security_group" "VPN" {
   description = "Allow connection from my computer"
   vpc_id = module.roi-vpc.vpc_id
   tags = {
-    "name" = "Allow My computer IP"
+    "Name" = "Allow My computer IP"
   }
   ingress {
     description = "My IP"

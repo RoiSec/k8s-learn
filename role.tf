@@ -17,6 +17,12 @@ resource "aws_iam_role" "eks-cluster-role" {
 POLICY
 }
 
+
+resource "aws_iam_instance_profile" "node_group_instance_profile" {
+  name = "instnce_profile"
+  role = aws_iam_role.eks-node-group-role.name
+}
+
 resource "aws_iam_role_policy_attachment" "example-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.eks-cluster-role.name
@@ -29,6 +35,28 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEKSVPCResourceControlle
   role       = aws_iam_role.eks-cluster-role.name
 
 }
+
+resource "aws_iam_role_policy_attachment" "example-AmazonEKSWorkerNodePolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  role       = aws_iam_role.eks-node-group-role.name
+}
+
+resource "aws_iam_role_policy_attachment" "example-AmazonEKS_CNI_Policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.eks-node-group-role.name
+  depends_on = [
+    aws_iam_role.eks-cluster-role,
+  ]
+}
+
+resource "aws_iam_role_policy_attachment" "example-AmazonEC2ContainerRegistryReadOnly" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.eks-node-group-role.name
+  depends_on = [
+    aws_iam_role.eks-node-group-role
+  ]
+}
+
 resource "aws_iam_role" "eks-node-group-role" {
   name = "eks-node-group-role"
 
@@ -47,18 +75,9 @@ resource "aws_iam_role" "eks-node-group-role" {
 }
 POLICY
 }
-
-resource "aws_iam_role_policy_attachment" "example-AmazonEKSWorkerNodePolicy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.eks-node-group-role.name
-}
-
-resource "aws_iam_role_policy_attachment" "example-AmazonEKS_CNI_Policy" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.eks-node-group-role.name
-}
-
-resource "aws_iam_role_policy_attachment" "example-AmazonEC2ContainerRegistryReadOnly" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.eks-node-group-role.name
+data "aws_iam_role" "node_role" {
+  name = "eks-node-group-role"
+  depends_on = [
+    aws_iam_role.eks-node-group-role
+  ]
 }
