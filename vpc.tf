@@ -26,7 +26,7 @@ module "roi-vpc" {
   }
 }
 resource "aws_security_group" "VPN" {
-  description = "Allow connection from my computer"
+  //description = "Allow connection from my computer"
   vpc_id = module.roi-vpc.vpc_id
   tags = {
     "Name" = "Allow My computer IP"
