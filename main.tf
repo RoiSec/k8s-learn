@@ -9,7 +9,6 @@ module "roi-eks" {
   subnets         = module.roi-vpc.private_subnets
   cluster_endpoint_public_access_cidrs = var.allowing_ips
   cluster_iam_role_name = aws_iam_role.eks-cluster-role.name
-  
   cluster_endpoint_public_access = true // Allow networking from outside
   cluster_endpoint_private_access = true //allow networking from nodes within the VPC
   manage_worker_iam_resources = false // using my node-role 
