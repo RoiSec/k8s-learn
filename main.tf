@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-west-2"
+  region = var.region
 }
 module "roi-eks" {
   source          = "terraform-aws-modules/eks/aws"

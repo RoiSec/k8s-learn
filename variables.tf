@@ -6,9 +6,13 @@
     type = string
     default = "Roi-Test-cluster"
   }
+    variable "region" {
+    type = string
+    default = "us-east-2"
+  }
   variable "allowing_ips" {
     type = list(string)
-    default = ["217.132.45.237/32"]
+    default = ["89.139.179.229/32"]
   }
   variable "manage_aws_auth" {
       type = bool
