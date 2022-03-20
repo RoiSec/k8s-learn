@@ -12,12 +12,14 @@
   }
   variable "allowing_ips" {
     type = list(string)
-    default = ["89.139.179.229/32"]
   }
   variable "manage_aws_auth" {
       type = bool
       default = false
-    
+  }
+    variable "enable_irsa" {
+      type = bool
+      default = true
   }
 variable "cluster_tags" {
     type = map(string)
@@ -30,9 +32,4 @@ variable "cluster_tags" {
   name        = "Roi-Test-Lab"
 }
   
-}
-variable "name" {
-    type = string
-    default = "Roi-Test"
-    description = "(optional) describe your variable"
 }

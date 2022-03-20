@@ -15,6 +15,7 @@ module "roi-eks" {
   manage_cluster_iam_resources = false // using my Cluster Role
   manage_aws_auth = var.manage_aws_auth
   cluster_tags = var.cluster_tags
+  enable_irsa = var.enable_irsa
   depends_on = [
     aws_iam_role.eks-cluster-role,aws_iam_role.eks-node-group-role,data.aws_iam_role.node_role
   ]
@@ -27,11 +28,13 @@ module "roi-eks" {
     iam_role_arn=data.aws_iam_role.node_role.arn
     
   }
+  
   node_groups = {//create  node groups 
     example = {
       
     }
 }
 }
-  
+
+
 
