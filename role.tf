@@ -87,7 +87,7 @@ module "k8s-service-a" {
     oidc_providers = {
     one = {
       provider_arn               = module.roi-eks.oidc_provider_arn
-      namespace_service_accounts = ["default:my-app-staging", "canary:my-app-staging"]
+      namespace_service_accounts = ["default:iam-test"]
     }
   }
 }
