@@ -1,9 +1,23 @@
 provider "aws" {
   region = var.region
 }
+data "aws_eks_cluster" "eks" {
+  name = module.roi-eks.cluster_id
+}
+data "aws_eks_cluster_auth" "eks" {
+  name = module.roi-eks.cluster_id
+}
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.eks.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.eks.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.eks.token
+}
+
 module "roi-eks" {
   source          = "terraform-aws-modules/eks/aws"
+  version = "17.24.0"
   cluster_version = var.cluster_version
+  write_kubeconfig = true
   cluster_name    = var.cluster_name
   vpc_id          = module.roi-vpc.vpc_id
   subnets         = module.roi-vpc.private_subnets
@@ -15,6 +29,14 @@ module "roi-eks" {
   manage_cluster_iam_resources = false // using my Cluster Role
   manage_aws_auth = var.manage_aws_auth
   cluster_tags = var.cluster_tags
+  # AWS Auth (kubernetes_config_map)
+  map_roles = [
+    {
+      rolearn  = module.k8s-service-a.iam_role_arn
+      username = "dev-user"
+      groups   = [""]
+    },
+  ]
   enable_irsa = var.enable_irsa
   depends_on = [
     aws_iam_role.eks-cluster-role,aws_iam_role.eks-node-group-role,data.aws_iam_role.node_role
