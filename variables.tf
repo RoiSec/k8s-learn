@@ -15,7 +15,7 @@
   }
   variable "manage_aws_auth" {
       type = bool
-      default = true
+      default = false
   }
     variable "enable_irsa" {
       type = bool

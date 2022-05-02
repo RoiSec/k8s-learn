@@ -10,5 +10,9 @@ resource "kubernetes_service_account" "iam-test" {
     annotations = {
       "eks.amazonaws.com/role-arn" = module.k8s-service-a.iam_role_arn
     }
+    
   }
+  depends_on = [
+    module.roi-eks
+  ]
 }

@@ -83,14 +83,13 @@ data "aws_iam_role" "node_role" {
 module "k8s-service-a" {
   source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
   role_name = "roi-k8s-serviceaccountToRole"
-  role_policy_arns = ["arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"]
+  role_policy_arns = ["arn:aws:iam::aws:policy/SecretsManagerReadWrite"]
     oidc_providers = {
     one = {
       provider_arn               = module.roi-eks.oidc_provider_arn
-      namespace_service_accounts = ["default:iam-test"]
+      namespace_service_accounts = ["default:iam-test2"]
     }
   }
 }
-
 
 
